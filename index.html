@@ -3,30 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Charity: water Sploosh Prototype</title>
+    <title>Charity: water Game</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <main class="game-page">
         <header class="game-header">
             <img src="img/cw_logo_horizontal.png" alt="charity: water" class="cw-logo">
-            <h1>Well Watch: Sploosh Prototype</h1>
-            <p>Find all hidden clean-water pipelines before you run out of splashes.</p>
+            <h1>Well Watch: Hit or Miss</h1>
+            <p>Find all hidden clean-water pipelines targets before you run out of attempts.</p>
         </header>
 
         <section class="game-layout">
             <aside class="left-panel">
-                <p class="panel-title">Splashes Left</p>
+                <p class="panel-title">Attempts Left</p>
                 <p id="throws-left" class="big-counter">24</p>
                 <div id="bomb-tracker" class="bomb-tracker"></div>
             </aside>
 
             <section class="board-frame" aria-label="Game Board Area">
+                <div class="difficulty-row">
+                    <label for="difficulty-select">Difficulty</label>
+                    <select id="difficulty-select" aria-label="Select game difficulty">
+                        <option value="easy">Easy</option>
+                        <option value="normal" selected>Normal</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                </div>
                 <div class="board-top">
                     <h2>Record</h2>
                     <p id="record-value" class="record-value">--</p>
                 </div>
-                <div id="game-board" class="game-board" aria-label="Sploosh game grid"></div>
+                <div id="game-board" class="game-board" aria-label="Game grid"></div>
                 <div class="board-bottom">
                     <p id="message" class="message">Click any square to start searching.</p>
                     <button id="new-game-btn" type="button">New Game</button>
@@ -34,7 +42,7 @@
             </section>
 
             <aside class="right-panel">
-                <p class="panel-title">Targets</p>
+                <p class="panel-title">Pipeline Targets</p>
                 <ul id="target-list" class="target-list"></ul>
                 <div class="legend-box">
                     <p><span class="legend-hit">★</span> = hit</p>
@@ -43,6 +51,15 @@
             </aside>
         </section>
     </main>
+
+    <footer class="site-footer">
+        <p>Learn more and support clean water:</p>
+        <nav aria-label="Charity water links">
+            <a href="https://www.charitywater.org/" target="_blank" rel="noopener noreferrer">charity: water</a>
+            <a href="https://www.charitywater.org/donate" target="_blank" rel="noopener noreferrer">Donate</a>
+            <a href="https://www.charitywater.org/fundraise" target="_blank" rel="noopener noreferrer">Fundraise</a>
+        </nav>
+    </footer>
 
     <script src="script.js"></script>
 </body>

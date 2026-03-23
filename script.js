@@ -5,17 +5,44 @@ const targetListElement = document.getElementById('target-list');
 const messageElement = document.getElementById('message');
 const newGameButton = document.getElementById('new-game-btn');
 const recordValueElement = document.getElementById('record-value');
+const difficultySelectElement = document.getElementById('difficulty-select');
 
 const boardSize = 8;
-const totalThrows = 24;
-const targetSizes = [4, 3, 2];
-const recordStorageKey = 'cw-sploosh-best-throws';
+const gameModes = {
+	easy: {
+		throws: 30,
+		targetSizes: [3, 2]
+	},
+	normal: {
+		throws: 24,
+		targetSizes: [4, 3, 2]
+	},
+	hard: {
+		throws: 18,
+		targetSizes: [5, 4, 3, 2]
+	}
+};
+
+const hitSound = new Audio('audio/freesound_community-splash-water-103984.mp3');
+const missSound = new Audio('audio/Dirt.mp3');
 
 let board = [];
 let targets = [];
-let throwsLeft = totalThrows;
+let currentDifficulty = difficultySelectElement.value;
+let throwsLeft = gameModes[currentDifficulty].throws;
 let throwsUsed = 0;
 let gameOver = false;
+
+function getRecordStorageKey() {
+	return `cw-sploosh-best-throws-${currentDifficulty}`;
+}
+
+function playSound(soundEffect) {
+	soundEffect.currentTime = 0;
+	soundEffect.play().catch(() => {
+		// Ignore playback errors if browser blocks sound before first user interaction.
+	});
+}
 
 function createEmptyBoard() {
 	board = [];
@@ -37,9 +64,10 @@ function createEmptyBoard() {
 
 function placeTargets() {
 	targets = [];
+	const modeTargetSizes = gameModes[currentDifficulty].targetSizes;
 
 	// Each target is a hidden pipe segment group, like Sploosh Kaboom fish/squids.
-	targetSizes.forEach((size, index) => {
+	modeTargetSizes.forEach((size, index) => {
 		let placed = false;
 
 		while (!placed) {
@@ -107,8 +135,9 @@ function createBoardCells() {
 
 function renderBombTracker() {
 	bombTrackerElement.innerHTML = '';
+	const totalThrowsForMode = gameModes[currentDifficulty].throws;
 
-	for (let i = 0; i < totalThrows; i += 1) {
+	for (let i = 0; i < totalThrowsForMode; i += 1) {
 		const bomb = document.createElement('div');
 		bomb.className = 'bomb';
 
@@ -145,7 +174,7 @@ function renderTargetList() {
 }
 
 function updateRecordText() {
-	const savedRecord = localStorage.getItem(recordStorageKey);
+	const savedRecord = localStorage.getItem(getRecordStorageKey());
 
 	if (savedRecord === null) {
 		recordValueElement.textContent = '--';
@@ -167,18 +196,18 @@ function finishGame(win) {
 	});
 
 	if (win) {
-		messageElement.textContent = `You found every pipeline in ${throwsUsed} throws!`;
+		messageElement.textContent = `You found every pipeline target in ${throwsUsed} attempts!`;
 
-		const savedRecord = localStorage.getItem(recordStorageKey);
+		const savedRecord = localStorage.getItem(getRecordStorageKey());
 		const recordAsNumber = savedRecord === null ? null : Number(savedRecord);
 
 		if (recordAsNumber === null || throwsUsed < recordAsNumber) {
-			localStorage.setItem(recordStorageKey, `${throwsUsed}`);
+			localStorage.setItem(getRecordStorageKey(), `${throwsUsed}`);
 			updateRecordText();
 			messageElement.textContent += ' New record!';
 		}
 	} else {
-		messageElement.textContent = 'Out of splashes. Press New Game to try again.';
+		messageElement.textContent = 'Out of attempts. Press New Game to try again.';
 	}
 }
 
@@ -199,6 +228,7 @@ function handleCellClick(row, col, buttonElement) {
 	throwsLeftElement.textContent = `${throwsLeft}`;
 
 	if (currentCell.hasTarget) {
+		playSound(hitSound);
 		buttonElement.classList.add('hit');
 		buttonElement.textContent = '★';
 
@@ -207,14 +237,15 @@ function handleCellClick(row, col, buttonElement) {
 
 		if (target.hits === target.size) {
 			target.found = true;
-			messageElement.textContent = `Nice! You found a full target of size ${target.size}.`;
+			messageElement.textContent = `Nice! You found a full pipeline target of size ${target.size}.`;
 		} else {
 			messageElement.textContent = 'Hit! Keep searching around this area.';
 		}
 	} else {
+		playSound(missSound);
 		buttonElement.classList.add('miss');
 		buttonElement.textContent = '✕';
-		messageElement.textContent = 'Splash... no pipeline there.';
+		messageElement.textContent = 'Miss... no pipeline there.';
 	}
 
 	buttonElement.classList.add('disabled');
@@ -232,7 +263,7 @@ function handleCellClick(row, col, buttonElement) {
 }
 
 function startNewGame() {
-	throwsLeft = totalThrows;
+	throwsLeft = gameModes[currentDifficulty].throws;
 	throwsUsed = 0;
 	gameOver = false;
 	throwsLeftElement.textContent = `${throwsLeft}`;
@@ -247,4 +278,10 @@ function startNewGame() {
 }
 
 newGameButton.addEventListener('click', startNewGame);
+difficultySelectElement.addEventListener('change', () => {
+	currentDifficulty = difficultySelectElement.value;
+	startNewGame();
+	messageElement.textContent = `Difficulty set to ${currentDifficulty}. Board reset and ready.`;
+});
+
 startNewGame();

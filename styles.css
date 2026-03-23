@@ -40,20 +40,28 @@ body {
 	font-family: "Trebuchet MS", "Verdana", sans-serif;
 	color: #ffffff;
 	background:
-		radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.15), transparent 20%),
-		radial-gradient(circle at 70% 75%, rgba(255, 255, 255, 0.1), transparent 25%),
-		linear-gradient(180deg, var(--ocean-1) 0%, var(--ocean-2) 80%);
+		linear-gradient(180deg, rgba(12, 34, 56, 0.55), rgba(10, 26, 44, 0.62)),
+		radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.1), transparent 20%),
+		radial-gradient(circle at 70% 75%, rgba(255, 255, 255, 0.08), transparent 25%),
+		url("img/charitywater_background.jpg");
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
 }
 
 .game-page {
 	max-width: 1100px;
 	margin: 0 auto;
 	padding: 20px 14px 32px;
+	background: rgba(15, 39, 63, 0.42);
+	border-radius: 16px;
+	box-shadow: 0 10px 35px rgba(0, 0, 0, 0.45);
 }
 
 .game-header {
 	text-align: center;
 	margin-bottom: 14px;
+	padding-top: 2px;
 }
 
 .cw-logo {
@@ -61,18 +69,29 @@ body {
 	max-width: 50%;
 	display: block;
 	margin: 0 auto 8px;
+	padding: 8px 24px;
+	background: rgba(248, 252, 255, 0.95);
+	border: 1px solid rgba(0, 0, 0, 0.12);
+	border-radius: 999px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.28);
 }
 
 .game-header h1 {
 	margin: 6px 0;
 	font-size: clamp(1.6rem, 3.8vw, 2.3rem);
 	color: var(--cw-yellow);
-	text-shadow: 0 2px 0 rgba(0, 0, 0, 0.35);
+	text-shadow: 0 2px 0 rgba(0, 0, 0, 0.5);
+	display: inline-block;
+	padding: 6px 12px;
+	border-radius: 10px;
+	background: rgba(8, 28, 47, 0.72);
+	border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .game-header p {
 	margin: 0;
-	color: #d5ebff;
+	color: #e9f5ff;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 
 .game-layout {
@@ -84,7 +103,7 @@ body {
 
 .left-panel,
 .right-panel {
-	background: rgba(9, 25, 40, 0.62);
+	background: rgba(12, 36, 59, 0.72);
 	border: 2px solid rgba(255, 255, 255, 0.2);
 	border-radius: 14px;
 	padding: 12px;
@@ -135,12 +154,45 @@ body {
 	padding: 10px;
 }
 
+.difficulty-row {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	background: rgba(11, 14, 19, 0.4);
+	border: 2px solid rgba(255, 255, 255, 0.25);
+	border-radius: 8px;
+	margin-bottom: 10px;
+	padding: 6px 8px;
+}
+
+.difficulty-row label {
+	font-weight: 700;
+	color: #ffffff;
+}
+
+#difficulty-select {
+	appearance: none;
+	border: 1px solid rgba(255, 255, 255, 0.35);
+	border-radius: 8px;
+	padding: 6px 10px;
+	background: #0f3558;
+	color: #ffffff;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+#difficulty-select:focus {
+	outline: 2px solid var(--cw-yellow);
+	outline-offset: 2px;
+}
+
 .board-top {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	gap: 10px;
-	background: rgba(11, 14, 19, 0.6);
+	background: rgba(11, 14, 19, 0.42);
 	border: 2px solid rgba(255, 255, 255, 0.25);
 	border-radius: 8px;
 	margin-bottom: 10px;
@@ -167,7 +219,7 @@ body {
 	display: grid;
 	grid-template-columns: repeat(8, 1fr);
 	gap: 3px;
-	background: rgba(6, 31, 58, 0.72);
+	background: rgba(14, 48, 82, 0.78);
 	padding: 7px;
 	border: 3px solid rgba(255, 255, 255, 0.2);
 	border-radius: 6px;
@@ -177,7 +229,7 @@ body {
 	width: 100%;
 	aspect-ratio: 1;
 	border: 1px solid rgba(255, 255, 255, 0.2);
-	background: linear-gradient(180deg, #205990, #194874);
+	background: linear-gradient(180deg, #2f67a0, #25588e);
 	color: transparent;
 	font-size: 1.4rem;
 	font-weight: 700;
@@ -276,6 +328,39 @@ body {
 	color: #f8f7cc;
 }
 
+.site-footer {
+	margin: 12px auto 20px;
+	max-width: 1100px;
+	padding: 12px 14px;
+	text-align: center;
+	background: rgba(10, 32, 52, 0.74);
+	border: 1px solid rgba(255, 255, 255, 0.28);
+	border-radius: 12px;
+	color: #dcecff;
+}
+
+.site-footer p {
+	margin: 0 0 8px;
+	font-weight: 700;
+}
+
+.site-footer nav {
+	display: flex;
+	justify-content: center;
+	gap: 14px;
+	flex-wrap: wrap;
+}
+
+.site-footer a {
+	color: var(--cw-yellow);
+	font-weight: 700;
+	text-underline-offset: 2px;
+}
+
+.site-footer a:hover {
+	color: #fff4bf;
+}
+
 @media (max-width: 900px) {
 	.game-layout {
 		grid-template-columns: 1fr;
@@ -288,5 +373,13 @@ body {
 
 	.bomb-tracker {
 		grid-template-columns: repeat(8, 1fr);
+	}
+
+	.game-page {
+		border-radius: 0;
+	}
+
+	body {
+		background-attachment: scroll;
 	}
 }
