@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charity: water Sploosh Prototype</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="game-page">
+        <header class="game-header">
+            <img src="img/cw_logo_horizontal.png" alt="charity: water" class="cw-logo">
+            <h1>Well Watch: Sploosh Prototype</h1>
+            <p>Find all hidden clean-water pipelines before you run out of splashes.</p>
+        </header>
+
+        <section class="game-layout">
+            <aside class="left-panel">
+                <p class="panel-title">Splashes Left</p>
+                <p id="throws-left" class="big-counter">24</p>
+                <div id="bomb-tracker" class="bomb-tracker"></div>
+            </aside>
+
+            <section class="board-frame" aria-label="Game Board Area">
+                <div class="board-top">
+                    <h2>Record</h2>
+                    <p id="record-value" class="record-value">--</p>
+                </div>
+                <div id="game-board" class="game-board" aria-label="Sploosh game grid"></div>
+                <div class="board-bottom">
+                    <p id="message" class="message">Click any square to start searching.</p>
+                    <button id="new-game-btn" type="button">New Game</button>
+                </div>
+            </section>
+
+            <aside class="right-panel">
+                <p class="panel-title">Targets</p>
+                <ul id="target-list" class="target-list"></ul>
+                <div class="legend-box">
+                    <p><span class="legend-hit">★</span> = hit</p>
+                    <p><span class="legend-miss">✕</span> = miss</p>
+                </div>
+            </aside>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
